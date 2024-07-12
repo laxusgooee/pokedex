@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [PokemonController::class, 'index'])->name('pokemon.index');
+Route::get('/{name}', [PokemonController::class, 'show'])->name('pokemon.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

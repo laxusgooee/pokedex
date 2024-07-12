@@ -1,40 +1,14 @@
 <script setup lang="ts">
-import InputError from '@/Components/InputError.vue';
-import TextInput from '@/Components/TextInput.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import Pagination from '@/Components/Pagination.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { computed, reactive } from 'vue';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps<{
-    pokemons: Array<{name: string;}>;
-    laravelVersion: string;
-    phpVersion: string;
+    pokemon: {
+    };
 }>();
 
-const pagination = reactive({
-    page: 1,
-    perPage: 10,
-    total: props.pokemons?.length ?? 0,
-});
-
-const form = useForm({
-    query: '',
-});
-
-const paginatedPokemons = computed(() => {
-    const offset = (pagination.page - 1) * pagination.perPage;
-    return props.pokemons.slice(offset, offset + pagination.perPage);
-});
-
-
-const submit = () => {
-    form.get(route('pokemon.index'), {
-        onFinish: () => {
-            form.reset('query');
-        },
-    });
-};
+function goBack() {
+    history.back();
+}
 </script>
 
 <template>
@@ -45,8 +19,11 @@ const submit = () => {
             class="absolute -left-20 top-0 max-w-[877px]"
             src="https://laravel.com/assets/img/welcome/background.svg"
         />
+        <div class="flex justify-between mx-8 pt-5 text-slate-900 dark:text-white relative">
+            <button @click="goBack">Go back</button>
+        </div>
         <div
-            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white"
+            class="relative min-h-screen flex flex-col items-center justify-center selection:text-white"
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
@@ -63,56 +40,11 @@ const submit = () => {
                             />
                         </svg>
                     </div>
-                    <nav class="-mx-3 flex flex-1 justify-end">
-                        <Link
-                            href="https://github.com/laxusgooee"
-                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                        >
-                            Github
-                        </Link>
-                    </nav>
                 </header>
 
-                <main class="mt-6 space-y-3">
-                    <form @submit.prevent="submit" class="flex p-2 rounded-md bg-slate-800 dark:bg-slate-200">
-                        <div class="flex-1">
-                            <TextInput
-                                id="query"
-                                type="query"
-                                class="mt-1 block w-full px-2"
-                                v-model="form.query"
-                                placeholder="Enter pokemon name"
-                                autofocus
-                            />
-
-                            <InputError class="mt-2" :message="form.errors.query" />
-                        </div>
-
-                        <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Search
-                        </PrimaryButton>
-                    </form>
+                <main class="mt-6 space-y-4">
                     
-                    <div class="rounded-md bg-slate-800 dark:bg-slate-200">
-                        <ul class="divide-y divide-slate-100 dark:divide-slate-400 px-2">
-                            <li v-for="pokemon in paginatedPokemons" :key="pokemon.name" class="px-4 py-3">
-                                <Link :href="route('pokemon.show',  { name: pokemon.name })" class="text-white dark:text-black">{{ pokemon.name }}</Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <Pagination
-                        :total="pagination.total"
-                        :current-page="pagination.page"
-                        :per-page="pagination.perPage"
-                        :page-length="pagination.perPage"
-                        @on-change-page="page => pagination.page = page"
-                        @on-change-rows-per-page="perPage => pagination.perPage = perPage"
-                    />
                 </main>
-
-                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </footer>
             </div>
         </div>
     </div>

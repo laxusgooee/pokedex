@@ -30,4 +30,19 @@ class PokemonController extends Controller
             'pokemons' => $pokemons->all()
         ]);
     }
+    
+    /**
+     * Display the details of a Pokemon.
+     *
+     * @param string $name
+     * @return \Illuminate\View\View
+     */
+    public function show($name)
+    {
+        $pokemon = [];
+
+        return Inertia::render('Pokemon/Show', [
+            'pokemon' => $pokemon,
+        ]);
+    }
 }
