@@ -59,5 +59,18 @@ Once the time is up, feel free to use comments/notes/pseudo code on how you woul
 When you are ready to submit, please ensure you have forked this repository. No merge/pull request is required,
 and provide us with a link to your attempt.
 
+----------------------------------------------------------------------
+## Comment
+
+### Tools
+ - [Laravel Breeze](https://laravel.com/docs/11.x/starter-kits)
+ - [Laravel Sail](https://laravel.com/docs/11.x/sail#main-content)
+ - [Database Cache](https://laravel.com/docs/11.x/cache#main-content)
+
+### what can be improved: 
+- Improve on caching the results from [Pokéapi](https://pokeapi.co/)
+- Asynchronously fetch [Pokéapi](https://pokeapi.co/) so there is no delay on the front-end
+- Unit test the Pokemon service
+
 ## Copyright
 All trademarks are the property of their respective owners.
