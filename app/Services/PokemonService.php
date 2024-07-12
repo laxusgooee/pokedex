@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use App\Exceptions\NetworkException;
 
 /**
@@ -62,12 +63,22 @@ class PokemonService
      */
     public function sendRequest($url)
     {
+        $cache_key = urlencode($url);
+
+        if (Cache::has($cache_key)) {
+            return Cache::get($cache_key);
+        }
+
         $response = Http::get($url);
     
         if ($response->failed()) {
             throw new NetworkException($url, 'Failed to fetch Pokémon data.');
         }
 
-        return $response->json();
+        $data = $response->json();
+
+        Cache::put($cache_key, $data);
+
+        return $data;
     }
 }
