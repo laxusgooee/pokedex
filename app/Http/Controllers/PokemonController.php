@@ -24,7 +24,7 @@ class PokemonController extends Controller
     {
         $pokemons = $this->pokemonService->getAll();
 
-        return Inertia::render('Welcome', [
+        return Inertia::render('Pokemon/Index', [
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'pokemons' => $pokemons->all()
