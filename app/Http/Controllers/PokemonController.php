@@ -22,7 +22,7 @@ class PokemonController extends Controller
      */
     public function index(Request $request): Response
     {
-        $pokemons = $this->pokemonService->getAll();
+        $pokemons = $this->pokemonService->find($request->query('query'));
 
         return Inertia::render('Pokemon/Index', [
             'laravelVersion' => Application::VERSION,
