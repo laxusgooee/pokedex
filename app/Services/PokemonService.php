@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use App\Exceptions\NetworkException;
 
 /**
  * Class PokemonService
@@ -17,6 +18,7 @@ class PokemonService
 
     /**
      * @return Collection
+     * @throws NetworkException
      */
     public function getAll() : Collection
     {
@@ -37,11 +39,16 @@ class PokemonService
     /**
      * @param string $url
      * @return mixed
+     * @throws NetworkException
      */
     public function sendRequest($url)
     {
         $response = Http::get($url);
     
+        if ($response->failed()) {
+            throw new NetworkException($url, 'Failed to fetch Pokémon data.');
+        }
+
         return $response->json();
     }
 }
