@@ -3,6 +3,16 @@ import { Head } from '@inertiajs/vue3';
 
 const props = defineProps<{
     pokemon: {
+        id: number;
+        name: string;
+        weight: number;
+        height: number;
+        species: string;
+        abilities: string[];
+        image: {
+            front: string;
+            back: string;
+        };
     };
 }>();
 
@@ -43,7 +53,38 @@ function goBack() {
                 </header>
 
                 <main class="mt-6 space-y-4">
-                    
+                    <div class="mx-auto max-w-screen-sm py-2 px-5 rounded-md bg-slate-800 dark:bg-slate-200 text-slate-100 dark:text-slate-900">
+                        <div class="flex">
+                            <img class="mx-auto" :src="pokemon.image?.front" />
+                        </div>
+
+                        <div class="flex flex-col items-center">
+                            <h5 class="font-bold text-4xl capitalize">{{ pokemon.name }}</h5>
+                            <h6 class="rounded py-0 px-3 bg-blue-300 text-sm">{{ pokemon.species }}</h6>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <div class="text-center">
+                                <h3 class="font-extrabold text-x2l">{{ pokemon.height }}</h3>
+                                <span class="text-sm">Height</span>
+                            </div>
+
+                            <div class="text-center">
+                                <h3 class="font-extrabold text-x2l">{{ pokemon.weight }}</h3>
+                                <span class="text-sm">Weight</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mx-auto max-w-screen-sm py-2 px-5 rounded-md bg-slate-800 dark:bg-slate-200 text-slate-100 dark:text-slate-900">
+                        <h2 class="font-bold">Abilities</h2>
+                        <hr class="bg-red-400 mb-5" />
+                        <ul class="space-y-2">
+                            <li v-for="ability in pokemon.abilities" :key="ability">
+                                <span>{{ ability }}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </main>
             </div>
         </div>

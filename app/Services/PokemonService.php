@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Exceptions\NetworkException;
+use App\Models\Pokemon;
 
 /**
  * Class PokemonService
@@ -36,6 +37,18 @@ class PokemonService
         } while ($next_url !== null);
 
         return $pokemons;
+    }
+
+    /**
+     * @param int|string $idOrName
+     * @return Pokemon
+     * @throws NetworkException
+     */
+    public function get($idOrName) : Pokemon
+    {
+        $res = $this->sendRequest($this->baseUrl . '/' . $idOrName);
+
+        return new Pokemon($res);
     }
 
     /**

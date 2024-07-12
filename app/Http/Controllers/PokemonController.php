@@ -39,10 +39,10 @@ class PokemonController extends Controller
      */
     public function show($name)
     {
-        $pokemon = [];
+        $pokemon = $this->pokemonService->get($name);
 
         return Inertia::render('Pokemon/Show', [
-            'pokemon' => $pokemon,
+            'pokemon' => $pokemon->toArray()
         ]);
     }
 }
